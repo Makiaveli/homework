@@ -6,7 +6,7 @@ hwuser@hwlab:~$ uname -r
 
 
 ```
-Создаем директорию и переходим в нее и скачиваем пакеты
+Создаем директорию, переходим в нее и скачиваем пакеты
 ```
 hwuser@hwlab:~$ mkdir kernel && cd kernel
 hwuser@hwlab:~/kernel$ wget https://kernel.ubuntu.com/mainline/v6.17-rc4/amd64/linux-headers-6.17.0-061700rc4-generic_6.17.0-061700rc4.202508312336_amd64.deb
