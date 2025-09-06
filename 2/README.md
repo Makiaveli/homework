@@ -1,4 +1,4 @@
-##Создаем raid
+## Создаем raid
 Cмотрим, какие блочные устройства у нас есть
 ```
 userhw@hwlab:~$ lsnlk
@@ -38,11 +38,11 @@ md0 : active raid1 sdc[1] sdb[0]
       5237760 blocks super 1.2 [2/2] [UU]
 
 ```
-##Ломаем, чиним raid
+## Ломаем, чиним raid
 Переводим диск sdb в состояния аварии
 ```
-mdadm /dev/md0 --fail /dev/sdb
-mdadm: set /dev/sdb faulty in /dev/md0
+veles@hwlab:~$ mdadm /dev/md0 --fail /dev/sdb
+veles@hwlab:~$ mdadm: set /dev/sdb faulty in /dev/md0
 
 ```
 
