@@ -159,6 +159,50 @@ unused devices: <none>
 ## Создаем GPT таблицу
 
 ```
-veles@hwlab:~$ sudo parted -s /dev/md127 mklabel gpt
+veles@hwlab:~$ sudo parted -s /dev/md0 mklabel gpt
+
+```
+Создаем партиции
+```
+veles@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 0% 50%
+Information: You may need to update /etc/fstab.
+
+veles@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 50% 100%
+Information: You may need to update /etc/fstab.
+
+```
+Создаем на этих партициях ФС
+```
+veles@hwlab:~$ for i in $(seq 1 2); do sudo mkfs.ext4 /dev/md0p$i; done
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 654336 4k blocks and 163840 inodes
+Filesystem UUID: d316329f-ae36-44f7-8b61-a42cd5aac7d9
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+mke2fs 1.47.0 (5-Feb-2023)
+Discarding device blocks: done
+Creating filesystem with 654592 4k blocks and 163840 inodes
+Filesystem UUID: 91b4e817-75ec-4969-b834-dd63b8836e40
+Superblock backups stored on blocks:
+        32768, 98304, 163840, 229376, 294912
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (16384 blocks): done
+Writing superblocks and filesystem accounting information: done
+
+```
+
+Монтируем их в каталоги 
+```
+[root@hwlab:~#  mkdir -p /raid/part{1,2}
+[root@hwlab:~# for i in $(seq 1 2); do mount /dev/md0p$i /raid/part$i;  done
 
 ```
