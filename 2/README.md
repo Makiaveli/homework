@@ -112,11 +112,11 @@ mdadm: hot removed /dev/sdb from /dev/md0
 Добавляем в рейд "новый" диск  sdd взамен "вышедшего из строя диска" sdb
 ```
 sudo mdadm /dev/md0 --add /dev/sdd
-mdadm: cannot load array metadata from /dev/md0
+mdadm: added /dev/sdd
 ```
 Проверяем
 ```
-veles@hwlab:~$ sudo  mdadm -D /dev/md127
+veles@hwlab:~$ sudo  mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
      Creation Time : Sat Sep  6 22:08:37 2025
@@ -154,5 +154,11 @@ md0 : active raid1 sdd[2] sdc[1]
       [====>................]  recovery = 22.9% (1205120/5237760) finish=1.7min speed=37660K/sec
 
 unused devices: <none>
+
+```
+## Создаем GPT таблицу
+
+```
+veles@hwlab:~$ sudo parted -s /dev/md127 mklabel gpt
 
 ```
