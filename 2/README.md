@@ -1,8 +1,6 @@
 ## Создаем raid
 Cмотрим, какие блочные устройства у нас есть
 ```
-userhw@hwlab:~$ lsnlk
-
 userhw@hwlab:~$ lsblk
 NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 sda                         8:0    0   16G  0 disk
@@ -27,7 +25,6 @@ userhw@hwlab:~$ mdadm --create --verbose /dev/md0 -l 1 -n 2 /dev/sd{b,c}
 Проверяем
 ```
 userhw@hwlab:~$ sudo mdadm -D /dev/md0
-[sudo] password for veles:
 /dev/md0:
            Version : 1.2
      Creation Time : Sat Sep  6 22:08:37 2025
@@ -60,20 +57,20 @@ Consistency Policy : resync
 ## Ломаем, чиним raid
 Переводим диск sdb в состояния аварии
 ```
-veles@hwlab:~$ sudo mdadm /dev/md0 --fail /dev/sdb
+userhw@hwlab:~$ sudo mdadm /dev/md0 --fail /dev/sdb
 mdadm: set /dev/sdb faulty in /dev/md0
 
 ```
 Проверяем
 ```
-veles@hwlab:~$ cat /proc/mdstat
+userhw@hwlab:~$ cat /proc/mdstat
 Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
 md0 : active raid1 sdc[1] sdb[0](F)
       5237760 blocks super 1.2 [2/1] [_U]
 
 ```
 ```
-veles@hwlab:~$ sudo  mdadm -D /dev/md0
+userhw@hwlab:~$ sudo  mdadm -D /dev/md0
 
 /dev/md0:
            Version : 1.2
@@ -106,17 +103,17 @@ Consistency Policy : resync
 ```
 Удаляем сломанный диск sdb из массива
 ```
-veles@hwlab:~$ sudo mdadm /dev/md0 --remove /dev/sdb
+userhw@hwlab:~$ sudo mdadm /dev/md0 --remove /dev/sdb
 mdadm: hot removed /dev/sdb from /dev/md0
 ```
 Добавляем в рейд "новый" диск  sdd взамен "вышедшего из строя диска" sdb
 ```
-sudo mdadm /dev/md0 --add /dev/sdd
+userhw@hwlab:~$ sudo mdadm /dev/md0 --add /dev/sdd
 mdadm: added /dev/sdd
 ```
 Проверяем
 ```
-veles@hwlab:~$ sudo  mdadm -D /dev/md0
+userhw@hwlab:~$ sudo  mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
      Creation Time : Sat Sep  6 22:08:37 2025
@@ -145,7 +142,7 @@ Consistency Policy : resync
     Number   Major   Minor   RaidDevice State
        2       8       48        0      spare rebuilding   /dev/sdd
        1       8       32        1      active sync   /dev/sdc
-veles@hwlab:~$ cat /proc/mdstat
+userhw@hwlab:~$ cat /proc/mdstat
 ```
 ```
 Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
@@ -159,21 +156,21 @@ unused devices: <none>
 ## Создаем GPT таблицу
 
 ```
-veles@hwlab:~$ sudo parted -s /dev/md0 mklabel gpt
+userhw@hwlab:~$ sudo parted -s /dev/md0 mklabel gpt
 
 ```
 Создаем партиции
 ```
-veles@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 0% 50%
+userhw@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 0% 50%
 Information: You may need to update /etc/fstab.
 
-veles@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 50% 100%
+userhw@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 50% 100%
 Information: You may need to update /etc/fstab.
 
 ```
 Создаем на этих партициях ФС
 ```
-veles@hwlab:~$ for i in $(seq 1 2); do sudo mkfs.ext4 /dev/md0p$i; done
+userhw@hwlab:~$ for i in $(seq 1 2); do sudo mkfs.ext4 /dev/md0p$i; done
 mke2fs 1.47.0 (5-Feb-2023)
 Discarding device blocks: done
 Creating filesystem with 654336 4k blocks and 163840 inodes
