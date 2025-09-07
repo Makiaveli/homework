@@ -26,23 +26,80 @@ userhw@hwlab:~$ mdadm --create --verbose /dev/md0 -l 1 -n 2 /dev/sd{b,c}
 ```
 Проверяем
 ```
-veles@hwlab:~$ cat /proc/mdstat
-Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
-md0 : active raid1 sdc[1] sdb[0]
-      5237760 blocks super 1.2 [2/2] [UU]
+userhw@hwlab:~$ sudo mdadm -D /dev/md0
+[sudo] password for veles:
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Sep  6 22:08:37 2025
+        Raid Level : raid1
+        Array Size : 5237760 (5.00 GiB 5.36 GB)
+     Used Dev Size : 5237760 (5.00 GiB 5.36 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
 
-unused devices: <none>
-veles@hwlab:~$ cat /proc/mdstat
-Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
-md0 : active raid1 sdc[1] sdb[0]
-      5237760 blocks super 1.2 [2/2] [UU]
+       Update Time : Sun Sep  7 04:40:50 2025
+             State : clean
+    Active Devices : 2
+   Working Devices : 2
+    Failed Devices : 0
+     Spare Devices : 0
+
+Consistency Policy : resync
+
+              Name : hwlab:0  (local to host hwlab)
+              UUID : 94dd2eee:e61d8973:b619d76a:d6fa9362
+            Events : 20
+
+    Number   Major   Minor   RaidDevice State
+       0       8       16        0      active sync   /dev/sdb
+       1       8       32        1      active sync   /dev/sdc
+
 
 ```
 ## Ломаем, чиним raid
 Переводим диск sdb в состояния аварии
 ```
-veles@hwlab:~$ mdadm /dev/md0 --fail /dev/sdb
-veles@hwlab:~$ mdadm: set /dev/sdb faulty in /dev/md0
+veles@hwlab:~$ sudo mdadm /dev/md0 --fail /dev/sdb
+mdadm: set /dev/sdb faulty in /dev/md0
 
 ```
+Проверяем
+```
+veles@hwlab:~$ cat /proc/mdstat
+Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
+md0 : active raid1 sdc[1] sdb[0](F)
+      5237760 blocks super 1.2 [2/1] [_U]
 
+veles@hwlab:~$ sudo  mdadm -D /dev/md0
+
+/dev/md0:
+           Version : 1.2
+     Creation Time : Sat Sep  6 22:08:37 2025
+        Raid Level : raid1
+        Array Size : 5237760 (5.00 GiB 5.36 GB)
+     Used Dev Size : 5237760 (5.00 GiB 5.36 GB)
+      Raid Devices : 2
+     Total Devices : 2
+       Persistence : Superblock is persistent
+
+       Update Time : Sun Sep  7 06:09:32 2025
+             State : clean, degraded
+    Active Devices : 1
+   Working Devices : 1
+    Failed Devices : 1
+     Spare Devices : 0
+
+Consistency Policy : resync
+
+              Name : hwlab:0  (local to host hwlab)
+              UUID : 94dd2eee:e61d8973:b619d76a:d6fa9362
+            Events : 22
+
+    Number   Major   Minor   RaidDevice State
+       -       0        0        0      removed
+       1       8       32        1      active sync   /dev/sdc
+
+       0       8       16        -      faulty   /dev/sdb
+
+```
