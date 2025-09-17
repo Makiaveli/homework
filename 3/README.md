@@ -1,4 +1,4 @@
-#Файловые системы и LVM-1
+# Файловые системы и LVM-1
 
 Определяемся с устройствами
 ```
@@ -84,7 +84,7 @@ root@hwlab:~# mkdir /data
 root@hwlab:~# mount /dev/laba3/testlab /data/
 ```
 
-##для того, что расширить lvm testlab размечаечаем sdc
+## для того, что расширить lvm testlab размечаечаем sdc
 ```
 root@hwlab:~# pvcreate /dev/sdc
   Physical volume "/dev/sdc" successfully created.
