@@ -71,3 +71,31 @@ Creating journal (8192 blocks): done
 Writing superblocks and filesystem accounting information: done
 
 ```
+Проверяем
+```
+lsblk -f | grep 'laba3-testlab'
+└─laba3-testlab           ext4        1.0                                              f5a88e74-7d99-4fcd-a2c2-53fce9d47ac4
+```
+##для того, что расширить lvm testlab размечаечаем sdc
+```
+root@hwlab:~# pvcreate /dev/sdc
+  Physical volume "/dev/sdc" successfully created.
+```
+Добавляем sdc в группу laba3
+```
+root@hwlab:~# vgextend laba3 /dev/sdc
+  Volume group "laba3" successfully extended
+```
+Проверяем
+```
+root@hwlab:~# vgextend laba3 /dev/sdc
+  Volume group "laba3" successfully extended
+root@hwlab:~# vgdisplay -v laba3 | grep 'PV Name'
+  PV Name               /dev/sdb
+  PV Name               /dev/sdc
+root@hwlab:~# vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  laba3       2   1   0 wz--n-   3,99g <2,40g
+  ubuntu-vg   1   1   0 wz--n- <14,25g <4,25g
+
+```
