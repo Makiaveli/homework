@@ -55,3 +55,16 @@ pool3  compression           gzip                       local
 pool4  compression           zle                        local
 
 ```
+Скачиваем файл
+```
+root@hwstend:~# for i in {1..4}; do wget -P /pool$i https://gutenberg.org/cache/epub/2600/pg2600.converter.log; done
+```
+Проверяем
+```
+root@hwstend:~# zfs list 
+NAME    USED  AVAIL  REFER  MOUNTPOINT
+pool1   148K   832M  28.5K  /pool1
+pool2   146K   832M    28K  /pool2
+<b>pool3   144K   832M    27K  /pool3</b>
+pool4   150K   832M    31K  /pool4
+```
