@@ -88,13 +88,113 @@ pool4  compressratio         1.00x                      -
 </ul>
 
 <p>Скачиваем архив из методички и распаковываем его</p>
+
 ```
 root@hwstend:~# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
 root@hwstend:~# tar -xzvf archive.tar.gz
 ```
+<p>Проверим, возможно ли импортировать данный каталог в пул:</p>
 
+```
+root@hwstend:~# zpool import -d zpoolexport/
+   pool: otus
+     id: 6554193320433390805
+  state: ONLINE
+status: Some supported features are not enabled on the pool.
+	(Note that they may be intentionally disabled if the
+	'compatibility' property is set.)
+ action: The pool can be imported using its name or numeric identifier, though
+	some features will not be available without an explicit 'zpool upgrade'.
+ config:
 
-    
-    
-   
-    
+	otus                         ONLINE
+	  mirror-0                   ONLINE
+	    /root/zpoolexport/filea  ONLINE
+	    /root/zpoolexport/fileb  ONLINE
+
+```
+<p>Сделаем импорт данного пула к нам в ОС и посмотрим информацию о составе импортированного пула</p>
+
+```
+root@hwstend:~#  zpool import -d zpoolexport/ otus
+root@hwstend:~# zpool status
+  pool: otus
+ state: ONLINE
+status: Some supported and requested features are not enabled on the pool.
+	The pool can still be used, but some features are unavailable.
+action: Enable all features using 'zpool upgrade'. Once this is done,
+	the pool may no longer be accessible by software that does not support
+	the features. See zpool-features(7) for details.
+config:
+
+	NAME                         STATE     READ WRITE CKSUM
+	otus                         ONLINE       0     0     0
+	  mirror-0                   ONLINE       0     0     0
+	    /root/zpoolexport/filea  ONLINE       0     0     0
+	    /root/zpoolexport/fileb  ONLINE       0     0     0
+
+errors: No known data errors
+
+```
+<p>Размер хранилища;</p>
+
+```
+root@hwstend:~# zfs get available otus
+NAME  PROPERTY   VALUE  SOURCE
+otus  available  350M   -
+
+```
+
+<p>Тип pool;</p>
+
+```
+root@hwstend:~# zfs get readonly otus
+NAME  PROPERTY  VALUE   SOURCE
+otus  readonly  off     default
+```
+
+<p>Значение recordsize;</p>
+
+```
+root@hwstend:~# zfs get recordsize otus
+NAME  PROPERTY    VALUE    SOURCE
+otus  recordsize  128K     local
+
+```
+
+<p>Алгоритм сжатие;</p>
+
+```
+root@hwstend:~# zfs get compression otus
+NAME  PROPERTY     VALUE           SOURCE
+otus  compression  zle             local
+```
+<p>Контрольная сумма</p>
+
+```
+root@hwstend:~# zfs get checksum otus
+NAME  PROPERTY  VALUE      SOURCE
+otus  checksum  sha256     local
+```
+## 3 Работа со снапшотом, поиск сообщения от преподавателя
+<p>Скачаем файл, указанный в задании:</p>
+
+```
+root@hwstend:~# wget -O otus_task2.file --no-check-certificate https://drive.usercontent.google.com/download?id=1wgxjih8YZ-cqLqaZVa0lA3h3Y029c3oI&export=download
+```
+
+<p>Восстановим файловую систему из снапшота:</p>
+
+```
+root@hwstend:~# zfs receive otus/test@today < otus_task2.file
+```
+
+<p>Далее, ищем в каталоге /otus/test файл с именем “secret_message”:</p>
+
+```
+root@hwstend:~# find /otus/test -name "secret_message"
+/otus/test/task1/file_mess/secret_message
+root@hwstend:~# cat /otus/test/task1/file_mess/secret_message 
+https://otus.ru/lessons/linux-hl/
+
+```
