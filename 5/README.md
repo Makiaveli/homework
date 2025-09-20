@@ -87,6 +87,11 @@ pool4  compressratio         1.00x                      -
    </ul>
 </ul>
 
+<p>Скачиваем архив из методички и распаковываем его</p>
+```
+root@hwstend:~# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
+root@hwstend:~# tar -xzvf archive.tar.gz
+```
 
 
     
