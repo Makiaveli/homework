@@ -65,6 +65,6 @@ root@hwstend:~# zfs list
 NAME    USED  AVAIL  REFER  MOUNTPOINT
 pool1   148K   832M  28.5K  /pool1
 pool2   146K   832M    28K  /pool2
-<b>pool3   144K   832M    27K  /pool3</b>
+pool3   144K   832M    27K  /pool3
 pool4   150K   832M    31K  /pool4
 ```
