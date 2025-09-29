@@ -1,8 +1,8 @@
 ## Включить отображение меню Grub
 <p>Редактируем файл /etc/default/grub</p>
-<p>Комментируем строку, скрывающую меню и ставим задержку для выбора пункта меню в 10 секунд.
-#GRUB_TIMEOUT_STYLE=hidden
-GRUB_TIMEOUT=10
+<p>Комментируем строку, скрывающую меню и ставим задержку для выбора пункта меню в 10 секунд.</p>
+<p></p>#GRUB_TIMEOUT_STYLE=hidden</p>
+<p>GRUB_TIMEOUT=10
 </p>
 ```
 hwuser@hwstend:/$ sudo nano /etc/default/grub
@@ -26,3 +26,4 @@ hwuser@hwstend:/$ sudo reboot
 
 ```
 Успех
+<img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_261.jpg'>
