@@ -70,6 +70,7 @@ hwuser@hwstend:~$ sudo vgrename ubuntu-vg ubuntu-typeyshaya-laba
 После чего можем перезагружаться и, если все сделано правильно, успешно грузимся с новым именем Volume Group и проверяем:
 </p>
 <img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_265.jpg'>
+
 ```
 hwuser@hwstend:~$ sudo vgs
   VG                     #PV #LV #SN Attr   VSize   VFree
