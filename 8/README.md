@@ -25,5 +25,27 @@ done
 hwuser@hwstend:/$ sudo reboot
 
 ```
-Успех
+<p>Успех</p>
 <img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_261.jpg'>
+
+## Попасть в систему без пароля несколькими способами
+
+### Способ 1. init=/bin/bash
+
+<p>В конце строки, начинающейся с linux, добавляем init=/bin/bash и нажимаем сtrl-x для загрузки в систему</p>
+
+<img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_262.jpg'>
+<p>Проверяем</p>
+<img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_263.jpg'>
+
+### Способ 2. Recovery mode
+<p>В меню загрузчика на первом уровне выбрать второй пункт (Advanced options…), далее загрузить пункт меню с указанием recovery mode в названии. 
+Получим меню режима восстановления.
+</p>
+<p>В этом меню сначала включаем поддержку сети (network) для того, чтобы файловая система перемонтировалась в режим read/write (либо это можно сделать вручную).
+Далее выбираем пункт root и попадаем в консоль с пользователем root. Если вы ранее устанавливали пароль для пользователя root (по умолчанию его нет), то необходимо его ввести. 
+В этой консоли можно производить любые манипуляции с системой.
+</p>
+<img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_264.jpg'>
+
+## Установить систему с LVM, после чего переименовать VG
