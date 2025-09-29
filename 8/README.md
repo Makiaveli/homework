@@ -49,3 +49,30 @@ hwuser@hwstend:/$ sudo reboot
 <img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_264.jpg'>
 
 ## Установить систему с LVM, после чего переименовать VG
+
+<p>Первым делом посмотрим текущее состояние системы (список Volume Group):
+</p>
+
+```
+hwuser@hwstend:~$ sudo vgs
+[sudo] password for hwuser:
+  VG        #PV #LV #SN Attr   VSize   VFree
+  ubuntu-vg   1   1   0 wz--n- <22,00g 11,00g
+
+```
+<p>Нас интересует вторая строка с именем Volume Group. Приступим к переименованию:</p>
+
+```
+hwuser@hwstend:~$ sudo vgrename ubuntu-vg ubuntu-typeyshaya-laba
+  Volume group "ubuntu-vg" successfully renamed to "ubuntu-typeyshaya-laba"
+```
+<p>Далее правим /boot/grub/grub.cfg. Везде заменяем старое название VG на новое (в файле дефис меняется на два дефиса ubuntu--vg ubuntu--otus).
+После чего можем перезагружаться и, если все сделано правильно, успешно грузимся с новым именем Volume Group и проверяем:
+</p>
+<img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_265.jpg'>
+```
+hwuser@hwstend:~$ sudo vgs
+  VG                     #PV #LV #SN Attr   VSize   VFree
+  ubuntu-typeyshaya-laba   1   1   0 wz--n- <22,00g 11,00g
+
+```
