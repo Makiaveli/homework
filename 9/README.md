@@ -259,7 +259,28 @@ http {
 </p>
 
 ```
-root@hwstend:~# systemctl start nginx@first
-root@hwstend:~# systemctl start nginx@second
-root@hwstend:~# systemctl status nginx@second
+hwuser@hwstend:~$ sudo systemctl start nginx@first
+hwuser@hwstend:~$ sudo systemctl start nginx@second
+hwuser@hwstend:~$ systemctl status nginx@second.service
+● nginx@second.service - A high performance web server and a reverse proxy server
+     Loaded: loaded (/etc/systemd/system/nginx@.service; disabled; preset: enabled)
+     Active: active (running) since Tue 2025-10-07 07:57:27 UTC; 14s ago
+       Docs: man:nginx(8)
+    Process: 2117652 ExecStartPre=/usr/sbin/nginx -t -c /etc/nginx/nginx-second.conf -q -g daemon on; master_process on; (code=exited, s>
+    Process: 2117653 ExecStart=/usr/sbin/nginx -c /etc/nginx/nginx-second.conf -g daemon on; master_process on; (code=exited, status=0/S>
+   Main PID: 2117655 (nginx)
+      Tasks: 5 (limit: 4548)
+     Memory: 4.1M (peak: 4.5M)
+        CPU: 64ms
+     CGroup: /system.slice/system-nginx.slice/nginx@second.service
+             ├─2117655 "nginx: master process /usr/sbin/nginx -c /etc/nginx/nginx-second.conf -g daemon on; master_process on;"
+             ├─2117656 "nginx: worker process"
+             ├─2117657 "nginx: worker process"
+             ├─2117658 "nginx: worker process"
+             └─2117659 "nginx: worker process"
+
+окт 07 07:57:27 hwstend systemd[1]: Starting nginx@second.service - A high performance web server and a reverse proxy server...
+окт 07 07:57:27 hwstend systemd[1]: Started nginx@second.service - A high performance web server and a reverse proxy server.
+
+
 ```
