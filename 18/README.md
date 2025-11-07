@@ -29,6 +29,18 @@ sda      8:0    0  40G  0 disk
 sdb      8:16   0   1G  0 disk
 sdc      8:32   0   1G  0 disk
 ```
+```
+[vagrant@localhost ~]$ df -hT
+Filesystem     Type      Size  Used Avail Use% Mounted on
+devtmpfs       devtmpfs  489M     0  489M   0% /dev
+tmpfs          tmpfs     496M     0  496M   0% /dev/shm
+tmpfs          tmpfs     496M  6.7M  489M   2% /run
+tmpfs          tmpfs     496M     0  496M   0% /sys/fs/cgroup
+/dev/sda1      xfs        40G  3.0G   38G   8% /
+/dev/sdb       ext4      976M  2.6M  907M   1% /mnt/disk1
+/dev/sdc       ext4      976M  2.6M  907M   1% /mnt/disk2
+tmpfs          tmpfs     100M     0  100M   0% /run/user/1000
+```
 
 ```
 hwuser@hwlab:~$ sudo netstat -tulpn | grep 8080
