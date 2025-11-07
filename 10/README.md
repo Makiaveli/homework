@@ -46,7 +46,7 @@ fi
 
 TMP=$(mktemp)
 
-# собираем записи nginx за диапазон из ВСЕХ файлов (включая .gz)
+
 LOGDATA=$(mktemp)
 zgrep -h "" /var/log/apache2/access.log* | \
 awk -v last="$LAST" -v now="$NOW" '$4 > "["last && $4 < "["now' > "$LOGDATA"
