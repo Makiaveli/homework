@@ -12,6 +12,15 @@
     </ul>
   <li>2 месяц</li>
     <ul>
-      <li><a href ="#">00. Инициализация системы. Systemd</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/18">09. Инициализация системы. Systemd</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/10">10. BASH</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/11">11. grep, sed, awk и другие</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/12">12. Управление процессами</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/15">15. SELinux - когда все запрещено </a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/16">16. Автоматизация администрирования. Ansible-1</a></li>
+    </ul>
+  <li>3 месяц</li>
+    <ul>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/18">18. Vagrant</a></li>
     </ul>
 </ul>
