@@ -74,7 +74,7 @@ docker push velestr  velestr/nginx-marvel:1.0
 
 # Задание со звездочкой
 <ul>
-  <li>Написать Docker-compose для приложения Redmine, с использованием опции build.</li>
+  <li>Написать <a href ="https://github.com/Makiaveli/homework/blob/main/19/docker-compose.yml">Docker-compose</a> для приложения Redmine, с использованием опции build.</li>
   <li>Добавить в базовый образ redmine любую кастомную тему оформления.</li>
   <li>Убедиться что после сборки новая тема доступна в настройках.</li>
   <li>Настроить вольюмы, для сохранения всей необходимой информации
