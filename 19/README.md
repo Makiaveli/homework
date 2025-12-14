@@ -47,6 +47,7 @@ docker run -d -p 8080:80 --name nginx-marvel velestr/nginx-marvel:1.0
   <li>набор слоёв (read-only)</li>
   <li>инструкция как создать контейнер</li>
 </ul>
+
 ### Docker-контейнер — это:
 <ul>
   <li>запущенный экземпляр образа</li>
@@ -68,4 +69,4 @@ docker run -d -p 8080:80 --name nginx-marvel velestr/nginx-marvel:1.0
 docker push velestr  velestr/nginx-marvel:1.0
 ```
 
-## Ссылка на <a href="https://hub.docker.com/r/velestr/nginx-marvel">dockerhub</a>
+## Ссылка на образ <a href="https://hub.docker.com/r/velestr/nginx-marvel">dockerhub</a>
