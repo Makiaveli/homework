@@ -22,5 +22,6 @@
   <li>3 месяц</li>
     <ul>
       <li><a href ="https://github.com/Makiaveli/homework/tree/main/18">18. Vagrant</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/19">19. Docker: основы работы с контейнеризацией</a></li>
     </ul>
 </ul>
