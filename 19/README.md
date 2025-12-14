@@ -19,6 +19,9 @@ EOF
 sudo apt update
 ```
 ### Устнавливаем Docker 
+```
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+```
 #### P/s в последних версиях модуль docker compose отдельно устанавливать не нужно он уже присутсвует в репозитории.
 
 ### Добавляем пользователя в группу docker
