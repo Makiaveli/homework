@@ -70,3 +70,14 @@ docker push velestr  velestr/nginx-marvel:1.0
 ```
 
 ## Ссылка на образ <a href="https://hub.docker.com/r/velestr/nginx-marvel">dockerhub</a>
+
+
+# Задание со звездочкой
+<ul>
+  <li>Написать Docker-compose для приложения Redmine, с использованием опции build.</li>
+  <li>Добавить в базовый образ redmine любую кастомную тему оформления.</li>
+  <li>Убедиться что после сборки новая тема доступна в настройках.</li>
+  <li>Настроить вольюмы, для сохранения всей необходимой информации
+</li>
+</ul>
+
