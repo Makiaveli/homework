@@ -16,7 +16,7 @@
 #### cоздаём пользователя под бэкапы;
 #### добавляем точку монтирования в /etc/fstab
 
-```
+```bash
 hwuser@hwsrv:~$ sudo apt install borgbackup -y
 hwuser@hwstend:~$ sudo apt install borgbackup -y
 hwuser@hwsrv:~$ fallocate -l 2g /var/backup.img
@@ -29,7 +29,7 @@ hwuser@hwsrv:~$ sudo chown borg:borg /var/backup
 
 ### 2 Настройка SSH-доступа client → backup
 
-```
+```bash
 hwuser@hwsrv:~$ sudo ssh-keygen -t ed25519 -f /root/.ssh/borg_backup -N ""
 hwuser@hwstend:~$ sudo ssh-copy-id -i /root/.ssh/borg_backup.pub borg@172.18.249.249
 hwuser@hwstend:~$ sudo borg init   --encryption=repokey-blake2   borg@172.18.249.249:/var/backup/etc_repo
@@ -37,7 +37,7 @@ hwuser@hwstend:~$ sudo borg init   --encryption=repokey-blake2   borg@172.18.249
 
 ### 3 Скрипт резервного копирования
 
-```
+```bash
 #!/bin/bash
 
 export BORG_REPO="borg@172.18.249.249:/var/backup/etc_repo"
@@ -77,15 +77,15 @@ borg compact 2>&1 | logger -t "$TAG"
 logger -t "$TAG" "Backup finished successfully"
 ```
 #### Делаем исполняемым
-```
-chmod +x /usr/local/bin/borg_etc_backup.sh
+```bash
+hwuser@hwstend:~$ sudo chmod +x /usr/local/bin/borg_etc_backup.sh
 ```
 ### 4 Systemd service и timer (каждые 5 минут)
 #### Service
-```
+```bash
 hwuser@hwstend:~$ sudo nano /etc/systemd/system/borg-etc-backup.service
 ```
-```
+```bash
 [Unit]
 Description=BorgBackup /etc backup
 
@@ -94,10 +94,10 @@ Type=oneshot
 ExecStart=/usr/local/bin/borg_etc_backup.sh
 ```
 #### Timer
-```
+```bash
 hwuser@hwstend:~$ sudo nano /etc/systemd/system/borg-etc-backup.timer
 ```
-```
+```bash
 [Unit]
 Description=Run borg /etc backup every 5 minutes
 
@@ -112,19 +112,19 @@ WantedBy=timers.target
 
 #### Активируем
 
-```
+```bash
 hwuser@hwstend:~$ sudo systemctl enable borg-etc-backup.timer --now
 Created symlink /etc/systemd/system/timers.target.wants/borg-etc-backup.timer → /etc/systemd/system/borg-etc-backup.timer.
 ```
 
 ### 5 Проверяем 
 
-```
+```bash
 hwuser@hwstend:~$ sudo systemctl list-timers | grep borg
 Thu 2026-01-15 14:33:40 UTC       4min 35s Thu 2026-01-15 14:28:40 UTC      24s ago borg-etc-backup.timer          borg-etc-backup.service
 ```
 
-```
+```bash
 hwuser@hwstend:~$ sudo journalctl -t borg-etc-backup
 янв 15 14:46:13 hwstend borg-etc-backup[124766]: Backup started
 янв 15 14:46:19 hwstend borg-etc-backup[124768]: ------------------------------------------------------------------------------
@@ -149,7 +149,7 @@ hwuser@hwstend:~$ sudo journalctl -t borg-etc-backup
 
 ```
 
-```
+```bash
 hwuser@hwstend:~$ sudo borg list borg@172.18.249.249:/var/backup/etc_repo
 borg@172.18.249.249's password:
 Enter passphrase for key ssh://borg@172.18.249.249/var/backup/etc_repo:
