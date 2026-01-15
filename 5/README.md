@@ -6,11 +6,11 @@
 </ul>
 
 Установим пакет утилит для ZFS:
-```
+```bash
 hwuser@hwstend:~$ sudo apt install zfsutils-linux  -y
 ```
 Создаём 4 пула по два диска в режиме RAID 1:
-```
+```bash
 root@hwstend:~# zpool create pool1 mirror /dev/sdb /dev/sdc
 root@hwstend:~# zpool create pool2 mirror /dev/sdd /dev/sde
 root@hwstend:~# zpool create pool3 mirror /dev/sdf /dev/sdg
@@ -18,7 +18,7 @@ root@hwstend:~# zpool create pool4 mirror /dev/sdh /dev/sdi
 
 ```
 Получилось 4 пула по 960М
-```
+```bash
 root@hwstend:~# zpool list
 NAME    SIZE  ALLOC   FREE  CKPOINT  EXPANDSZ   FRAG    CAP  DEDUP    HEALTH  ALTROOT
 pool1   960M   106K   960M        -         -     0%     0%  1.00x    ONLINE  -
@@ -28,7 +28,7 @@ pool4   960M   108K   960M        -         -     0%     0%  1.00x    ONLINE  -
 
 ```
 Добавим разные алгоритмы сжатия в каждую файловую систему lzjb, lz4, gzip, zle:
-```
+```bash
 root@hwstend:~# zfs set compression=lzjb pool1
 root@hwstend:~# zfs set compression=lz4 pool2
 root@hwstend:~# zfs set compression=gzip pool3
@@ -36,7 +36,7 @@ root@hwstend:~# zfs set compression=zle pool4
 
 ```
 Проверяем
-```
+```bash
 root@hwstend:~# zfs get all | grep compression
 pool1  compression           lzjb                       local
 pool2  compression           lz4                        local
@@ -45,11 +45,11 @@ pool4  compression           zle                        local
 
 ```
 Скачиваем файл
-```
+```bash
 root@hwstend:~# for i in {1..4}; do wget -P /pool$i https://gutenberg.org/cache/epub/2600/pg2600.converter.log; done
 ```
 Проверяем
-```
+```bash
 root@hwstend:~# zfs list 
 NAME    USED  AVAIL  REFER  MOUNTPOINT
 pool1   148K   832M  28.5K  /pool1
@@ -81,13 +81,13 @@ pool4  compressratio         1.00x                      -
 
 <p>Скачиваем архив из методички и распаковываем его</p>
 
-```
+```bash
 root@hwstend:~# wget -O archive.tar.gz --no-check-certificate 'https://drive.usercontent.google.com/download?id=1MvrcEp-WgAQe57aDEzxSRalPAwbNN1Bb&export=download'
 root@hwstend:~# tar -xzvf archive.tar.gz
 ```
 <p>Проверим, возможно ли импортировать данный каталог в пул:</p>
 
-```
+```bash
 root@hwstend:~# zpool import -d zpoolexport/
    pool: otus
      id: 6554193320433390805
@@ -107,7 +107,7 @@ status: Some supported features are not enabled on the pool.
 ```
 <p>Сделаем импорт данного пула к нам в ОС и посмотрим информацию о составе импортированного пула</p>
 
-```
+```bash
 root@hwstend:~#  zpool import -d zpoolexport/ otus
 root@hwstend:~# zpool status
   pool: otus
@@ -130,7 +130,7 @@ errors: No known data errors
 ```
 <p>Размер хранилища;</p>
 
-```
+```bash
 root@hwstend:~# zfs get available otus
 NAME  PROPERTY   VALUE  SOURCE
 otus  available  350M   -
@@ -139,7 +139,7 @@ otus  available  350M   -
 
 <p>Тип pool;</p>
 
-```
+```bash
 root@hwstend:~# zfs get readonly otus
 NAME  PROPERTY  VALUE   SOURCE
 otus  readonly  off     default
@@ -147,7 +147,7 @@ otus  readonly  off     default
 
 <p>Значение recordsize;</p>
 
-```
+```bash
 root@hwstend:~# zfs get recordsize otus
 NAME  PROPERTY    VALUE    SOURCE
 otus  recordsize  128K     local
@@ -156,14 +156,14 @@ otus  recordsize  128K     local
 
 <p>Алгоритм сжатие;</p>
 
-```
+```bash
 root@hwstend:~# zfs get compression otus
 NAME  PROPERTY     VALUE           SOURCE
 otus  compression  zle             local
 ```
 <p>Контрольная сумма</p>
 
-```
+```bash
 root@hwstend:~# zfs get checksum otus
 NAME  PROPERTY  VALUE      SOURCE
 otus  checksum  sha256     local
@@ -179,19 +179,19 @@ otus  checksum  sha256     local
 
 <p>Скачаем файл, указанный в задании:</p>
 
-```
+```bash
 root@hwstend:~# wget -O otus_task2.file --no-check-certificate https://drive.usercontent.google.com/download?id=1wgxjih8YZ-cqLqaZVa0lA3h3Y029c3oI&export=download
 ```
 
 <p>Восстановим файловую систему из снапшота:</p>
 
-```
+```bash
 root@hwstend:~# zfs receive otus/test@today < otus_task2.file
 ```
 
 <p>Далее, ищем в каталоге /otus/test файл с именем “secret_message”:</p>
 
-```
+```bash
 root@hwstend:~# find /otus/test -name "secret_message"
 /otus/test/task1/file_mess/secret_message
 root@hwstend:~# cat /otus/test/task1/file_mess/secret_message 
