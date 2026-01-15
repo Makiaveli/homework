@@ -10,7 +10,7 @@
 
 <p>С помощью утилиты audit2why смотрми и анализируем в логах (/var/log/audit/audit.log) информацию о блокировании порта </p>
 
-```
+```bash
 [hwuser@localhost ~]$ sudo less /var/log/audit/audit.log | grep "nginx"
 [sudo] password for hwuser:
 type=ADD_GROUP msg=audit(1761392679.959:404): pid=18847 uid=0 auid=1000 ses=5 subj=unconfined_u:unconfined_r:groupadd_t:s0-s0:c0.c1023 msg='op=add-group id=995 exe="/usr/sbin/groupadd" hostname=? addr=? terminal=? res=success'UID="root" AUID="hwuser" ID="nginx"
@@ -43,7 +43,7 @@ type=AVC msg=audit(1761398500.482:680): avc:  denied  { name_bind } for  pid=195
 Включим параметр nis_enabled и перезапустим nginx: setsebool -P nis_enabled on
 </p>
 
-```
+```bash
 [hwuser@localhost ~]$ sudo setsebool -P nis_enabled 1
 [hwuser@localhost ~]$ sudo systemctl start nginx
 [hwuser@localhost ~]$ sudo systemctl status nginx
@@ -75,7 +75,7 @@ Oct 25 16:44:38 localhost.localdomain systemd[1]: Started nginx.service - The ng
 
 <p>Добавим порт 4881 в тип http_port_t: </p>
 
-```
+```bash
 [hwuser@localhost ~]$ sudo semanage port -a -t http_port_t -p tcp 4881
 [hwuser@localhost ~]$ semanage port -l | grep  http_port_t
 ValueError: SELinux policy is not managed or store cannot be accessed.
@@ -116,7 +116,7 @@ See "systemctl status nginx.service" and "journalctl -xeu nginx.service" for det
 <p>Разрешим в SELinux работу nginx на порту TCP 4881 c помощью формирования и установки модуля SELinux</p>
 <p>Посмотрим логи SELinux, которые относятся к Nginx и натравим на них утилиту audit2allow </p>
 
-```
+```bash
 [hwuser@localhost ~]$ sudo grep nginx /var/log/audit/audit.log | audit2allow -M nginx
 ******************** IMPORTANT ***********************
 To make this policy package active, execute:
@@ -126,7 +126,7 @@ semodule -i nginx.pp
 
 <p>Audit2allow сформировал модуль, и сообщил нам команду, с помощью которой можно применить данный модуль и проверить работу nginx</p>
 
-```
+```bash
 [hwuser@localhost ~]$ sudo semodule -i nginx.pp
 [hwuser@localhost ~]$ sudo systemctl start nginx
 [hwuser@localhost ~]$ sudo systemctl status nginx
