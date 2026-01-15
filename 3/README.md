@@ -1,7 +1,7 @@
 # Файловые системы и LVM-1
 
 Определяемся с устройствами
-```
+```bash
 root@hwlab:~# lsblk
 NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 sda                         8:0    0   16G  0 disk
@@ -16,22 +16,22 @@ sde                         8:64   0    2G  0 disk
 sr0                        11:0    1  2,6G  0 rom
 ```
 Размечаем sdb
-```
+```bash
 root@hwlab:~# pvcreate /dev/sdb
   Physical volume "/dev/sdb" successfully created.
 ```
 Создаем группу томов laba3 на sdb
-```
+```bash
 root@hwlab:~# vgcreate laba3 /dev/sdb
   Volume group "laba3" successfully created
 ```
 Создаем логический том testlab
-```
+```bash
 root@hwlab:~# lvcreate -l+80%FREE -n testlab laba3
   Logical volume "testlab" created.
 ```
 Проверяем что получилось
-```
+```bash
 root@hwlab:~# vgdisplay laba3
   --- Volume group ---
   VG Name               laba3
@@ -56,7 +56,7 @@ root@hwlab:~# vgdisplay laba3
 
 ```
 создаем файловую систему 
-```
+```bash
 root@hwlab:~# mkfs.ext4 /dev/laba3/testlab
 mke2fs 1.47.0 (5-Feb-2023)
 /dev/laba3/testlab contains a btrfs file system
@@ -74,12 +74,12 @@ Writing superblocks and filesystem accounting information: done
 
 ```
 Проверяем
-```
+```bash
 lsblk -f | grep 'laba3-testlab'
 └─laba3-testlab           ext4        1.0                                              f5a88e74-7d99-4fcd-a2c2-53fce9d47ac4
 ```
 Создадим папку data и примонтируем ее к созданому lvm
-```
+```bash
 root@hwlab:~# mkdir /data
 root@hwlab:~# mount /dev/laba3/testlab /data/
 ```
