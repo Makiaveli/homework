@@ -15,6 +15,7 @@
 #### cоздаём отдельную точку монтирования /var/backup;
 #### cоздаём пользователя под бэкапы;
 #### добавляем точку монтирования в /etc/fstab
+
 ```
 hwuser@hwsrv:~$ sudo apt install borgbackup -y
 hwuser@hwstend:~$ sudo apt install borgbackup -y
