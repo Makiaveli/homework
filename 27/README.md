@@ -8,8 +8,8 @@
   <li><b>5.</b>резервная копия снимается каждые 5 минут. Такой частый запуск в целях демонстрации;</li>
   <li><b>6.</b>написан скрипт для снятия резервных копий. Скрипт запускается из соответствующей Cron джобы, либо systemd timer-а - на усмотрение студента;</li>
   <li><b>7.</b>настроено логирование процесса бекапа. Для упрощения можно весь вывод перенаправлять в logger с соответствующим тегом. Если настроите не в syslog, то обязательна ротация логов.</li>
-</ul>
-<hr>
+</ul><hr>
+
 ### 1
 #### Устанавливаем borg на клиент и сервер;
 #### cоздаём отдельную точку монтирования /var/backup;
@@ -27,7 +27,7 @@ hwuser@hwsrv:~$ sudo useradd -m -s /bin/bash borg
 hwuser@hwsrv:~$ sudo chown borg:borg /var/backup
 ```
 
-### Настройка SSH-доступа client → backup
+### 2 Настройка SSH-доступа client → backup
 
 ```
 hwuser@hwsrv:~$ sudo ssh-keygen -t ed25519 -f /root/.ssh/borg_backup -N ""
@@ -35,7 +35,7 @@ hwuser@hwstend:~$ sudo ssh-copy-id -i /root/.ssh/borg_backup.pub borg@172.18.249
 hwuser@hwstend:~$ sudo borg init   --encryption=repokey-blake2   borg@172.18.249.249:/var/backup/etc_repo
 ```
 
-### Скрипт резервного копирования
+### 3 Скрипт резервного копирования
 
 ```
 #!/bin/bash
@@ -76,11 +76,11 @@ borg compact 2>&1 | logger -t "$TAG"
 
 logger -t "$TAG" "Backup finished successfully"
 ```
-### Делаем исполняемым
+#### Делаем исполняемым
 ```
 chmod +x /usr/local/bin/borg_etc_backup.sh
 ```
-### Systemd service и timer (каждые 5 минут)
+### 4 Systemd service и timer (каждые 5 минут)
 #### Service
 ```
 hwuser@hwstend:~$ sudo nano /etc/systemd/system/borg-etc-backup.service
@@ -117,7 +117,7 @@ hwuser@hwstend:~$ sudo systemctl enable borg-etc-backup.timer --now
 Created symlink /etc/systemd/system/timers.target.wants/borg-etc-backup.timer → /etc/systemd/system/borg-etc-backup.timer.
 ```
 
-### Проверяем 
+### 5 Проверяем 
 
 ```
 hwuser@hwstend:~$ sudo systemctl list-timers | grep borg
