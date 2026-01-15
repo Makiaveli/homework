@@ -85,17 +85,17 @@ root@hwlab:~# mount /dev/laba3/testlab /data/
 ```
 
 ## для того, что расширить lvm testlab размечаечаем sdc
-```
+```bash
 root@hwlab:~# pvcreate /dev/sdc
   Physical volume "/dev/sdc" successfully created.
 ```
 Добавляем sdc в группу laba3
-```
+```bash
 root@hwlab:~# vgextend laba3 /dev/sdc
   Volume group "laba3" successfully extended
 ```
 Проверяем
-```
+```bash
 root@hwlab:~# vgdisplay -v laba3 | grep 'PV Name'
   PV Name               /dev/sdb
   PV Name               /dev/sdc
@@ -106,7 +106,7 @@ root@hwlab:~# vgs
 
 ```
 Сымитируем занятое место с помощью команды dd
-```
+```bash
 root@hwlab:~# dd if=/dev/zero of=/data/test.log bs=1M \
  count=8000 status=progress
 
@@ -117,20 +117,20 @@ dd: error writing '/data/test.log': No space left on device
 1628438528 bytes (1,6 GB, 1,5 GiB) copied, 27,3444 s, 59,6 MB/s
 ```
 Проверяем
-```
+```bash
 root@hwlab:~# df -Th /data/
 Filesystem                Type  Size  Used Avail Use% Mounted on
 /dev/mapper/laba3-testlab ext4  1,6G  1,6G     0 100% /data
 ```
 Увеличиваем LV за счет появившегося свободного места
-```
+```bash
 root@hwlab:~# lvextend -l+100%FREE /dev/laba3/testlab
   Size of logical volume laba3/testlab changed from 1,59 GiB (408 extents) to 3,99 GiB (1022 extents).
   Logical volume laba3/testlab successfully resized.
 
 ```
 Произведем resize файловой системы:
-```
+```bash
 root@hwlab:~# resize2fs /dev/laba3/testlab
 resize2fs 1.47.0 (5-Feb-2023)
 Filesystem at /dev/laba3/testlab is mounted on /data; on-line resizing required
@@ -138,7 +138,7 @@ old_desc_blocks = 1, new_desc_blocks = 1
 The filesystem on /dev/laba3/testlab is now 1046528 (4k) blocks long.
 ```
 Проверяем
-```
+```bash
 root@hwlab:~# df -Th /data
 Filesystem                Type  Size  Used Avail Use% Mounted on
 /dev/mapper/laba3-testlab ext4  3,9G  1,6G  2,2G  41% /data
