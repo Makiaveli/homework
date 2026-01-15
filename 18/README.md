@@ -21,7 +21,7 @@
 
 #### Проверка
 
-```
+```bash
 [vagrant@localhost ~]$ lsblk
 NAME   MAJ:MIN RM SIZE RO TYPE MOUNTPOINT
 sda      8:0    0  40G  0 disk
@@ -42,8 +42,8 @@ tmpfs          tmpfs     496M     0  496M   0% /sys/fs/cgroup
 tmpfs          tmpfs     100M     0  100M   0% /run/user/1000
 ```
 
-```
+```bash
 hwuser@hwlab:~$ sudo netstat -tulpn | grep 8080
-[sudo] пароль для veles:
+[sudo] пароль для hwuser:
 tcp        0      0 127.0.0.1:8080          0.0.0.0:*               LISTEN      10676/VBoxHeadless
 ```
