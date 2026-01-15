@@ -8,14 +8,14 @@ hwuser@hwsrv:~$ sudo apt install -y wget git nano build-essential devscripts \
 ```
 <p>Скачиваем исходные коды пакета и зависимости для сборки:</p>
 
-```
+```bash
 hwuser@hwsrv:~$ mkdir ~/deb && cd ~/deb
 hwuser@hwsrv:~$ sudo apt source nginx
 hwuser@hwsrv:~$ sudo apt build-dep nginx -y
 ```
 <p>Клонируем модуль и собираем библиотеку Brotli:</p>
 
-```
+```bash
 root@hwsrv:/home/hwuser/deb# cd ~
 root@hwsrv:~# git clone --recurse-submodules -j8 https://github.com/google/ngx_brotli
 root@hwsrv:~# cd ngx_brotli/deps/brotli
@@ -27,18 +27,18 @@ root@hwsrv:~/ngx_brotli/deps/brotli/out#  cd ~
 ```
 <p>Редактируем правила сборки Nginx, чтобы добавить поддержку модуля:</p>
 
-```
+```bash
 root@hwsrv:~# cd /home/veles/deb/nginx-*/
 root@hwsrv:/home/veles/deb/nginx-1.24.0# nano debian/rules
 ```
 <p>В секции common_configure_flags  (там где --with-cc-opt и --with-ld-opt) добавляем строку:</p>
 
-```
+```bash
 --add-module=/home/hwuser/ngx_brotli \
 ```
 <p>Запускаем сборку DEB пакета</p>
 
-```
+```bash
 debuild -us -uc -b
 ........
 Now running lintian nginx_1.24.0-2ubuntu7.5_amd64.changes ...
@@ -47,7 +47,7 @@ Finished running lintian.
 ```
 
 
-```
+```bash
 hwuser@hwsrv:~/deb$ sudo dpkg -i ~/deb/nginx_1.24.0-2ubuntu7.5_amd64.deb
 hwuser@hwsrv:~/deb$ sudo systemctl status nginx.service
 ● nginx.service - A high performance web server and a reverse proxy server
@@ -75,14 +75,14 @@ hwuser@hwsrv:~/deb$ sudo systemctl status nginx.service
 ## Создание своего APT-репозитория
 <p>Копируем пакеты в директорию Nginx:</p>
 
-```
+```bash
 hwuser@hwsrv:~/deb$ sudo mkdir -p /usr/share/nginx/html/repo
 hwuser@hwsrv:~/deb$ sudo cp ~/deb/*.deb /usr/share/nginx/html/repo/
 
 ```
 <p>Создаем индекс пакетов:</p>
 
-```
+```bash
 root@hwsrv:~# cd /usr/share/nginx/html/repo
 root@hwsrv:/usr/share/nginx/html/repo# dpkg-scanpackages . /dev/null | gzip -9c > Packages.gz
 dpkg-scanpackages: warning: Packages in archive but missing from override file:
@@ -93,12 +93,12 @@ dpkg-scanpackages: info: Wrote 15 entries to output Packages file.
 ### Настройка доступа через Nginx
 <p>Редактируем конфигурацию:</p>
 
-```
+```bash
 root@hwsrv:/usr/share/nginx/html/repo# nano /etc/nginx/sites-available/default
 ```
 <p>Проверяем конфигурацию и перезапускаем:</p>
 
-```
+```bash
 hwuser@hwsrv:/usr/share/nginx/html/repo$ sudo nginx -t
 nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
 nginx: configuration file /etc/nginx/nginx.conf test is successful
@@ -109,13 +109,13 @@ hwuser@hwsrv:/usr/share/nginx/html/repo$ sudo systemctl restart nginx.service
 
 <p>Добавляем локальный репозиторий:</p>
 
-```
+```bash
 hwuser@hwsrv:/usr/share/nginx/html/repo$ sudo echo "deb [trusted=yes] http://localhost/repo ./" | sudo tee /etc/apt/sources.list.d/localrepo.list
 hwuser@hwsrv:/usr/share/nginx/html/repo$ sudo apt update
 ```
 ### Проверка работы
 
-```
+```bash
 hwuser@hwsrv:/usr/share/nginx/html/repo$ sudo apt list -a | grep nginx
 nginx/noble-updates,noble-security,noble-updates,noble-security,now 1.24.0-2ubuntu7.5 amd64 [installed,local]
 ```
