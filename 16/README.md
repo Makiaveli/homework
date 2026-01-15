@@ -10,7 +10,7 @@
 
 ### 1 на управляющем хосте создаем структуру для ansible роли
 
-```
+```bash
 hwuser@ansible:~$ mkdir -p ~/ansible/roles/nginx/{tasks,templates,handlers,vars,defaults,files,meta}
 hwuser@ansible:~$ tree ./ansible/
 ./ansible/
@@ -31,7 +31,7 @@ hwuser@ansible:~$ tree ./ansible/
 ```
 ### 2 Определяем переменные (vars/main.yml)
 
-```
+```bash
 ---
 nginx_port: 8080
 nginx_user: www-data
@@ -40,7 +40,7 @@ nginx_worker_processes: auto
 
 ### 3 Определяем задачи (tasks/main.yml)
 
-```
+```bash
 ---
 - name: Установка Nginx
   become: true
@@ -68,7 +68,7 @@ nginx_worker_processes: auto
 
 ### 4 Определяем обработчики (handlers/main.yml)
 
-```
+```bash
 ---
 - name: Запустить nginx
   become: true
@@ -85,7 +85,7 @@ nginx_worker_processes: auto
 
 ### 5 Созаздаем шаблон (templates/nginx.conf.j2)
 
-```
+```bash
 user {{ nginx_user }};
 worker_processes {{ nginx_worker_processes }};
 
@@ -119,7 +119,7 @@ http {
 ```
 ### 6 Создаем Playbook для вызова роли
 
-```
+```bash
 ---
 - name: Развертывание nginx через роль
   hosts: web
@@ -130,21 +130,21 @@ http {
 
 ### 7 Создаем inventory файл 
 
-```
+```bash
 [web]
 192.168.56.10 ansible_user=hwuser ansible_ssh_private_key_file=~/.ssh/id_rsa
 ```
 
 ### 8 Запускам Playbook
 
-```
+```bash
 hwuser@ansible:~/ansible$ ansible-playbook -i inventory.ini site.yml
 
 ```
 
 ### 9 Проверям на подчиненной виртуальной машине
 
-```
+```bash
 hwuser@ansible:~/ansible$ sudo systemctl status nginx
 nginx.service - A high performance web server and a reverse proxy server
      Loaded: loaded (/usr/lib/systemd/system/nginx.service; enabled; preset: enabled)
@@ -167,12 +167,12 @@ nginx.service - A high performance web server and a reverse proxy server
 окт 30 11:49:17 hwsrv systemd[1]: Started nginx.service - A high performance web server and a reverse proxy server.
 ```
 
-```
+```bash
 hwuser@ansible:~/ansible$ ss -tuln | grep 8080
 tcp   LISTEN 0      511          0.0.0.0:8080      0.0.0.0:*
 ```
 
-```
+```bash
 hwuser@ansible:~/ansible$ curl http://localhost:8080
 <!DOCTYPE html>
 <html>
