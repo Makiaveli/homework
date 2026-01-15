@@ -1,7 +1,7 @@
 ## Systemd — создание unit-файла
 <p> создаём файл с конфигурацией для сервиса в директории /etc/default - из неё сервис будет брать необходимые переменные.</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo nano /etc/default/watchlog
 
 # Configuration file for my watchlog service
@@ -15,7 +15,7 @@ LOG=/var/log/watchlog.log
 
 <p> Создадим скрипт:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo nano /opt/watchlog.sh
 
 #!/bin/bash
@@ -35,13 +35,13 @@ fi
 
 <p>Добавим права на запуск файла:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo chmod +x /opt/watchlog.sh
 ```
 
 <p>Создадим юнит для сервиса:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo nano /etc/systemd/system/watchlog.service
 
 [Unit]
@@ -55,7 +55,7 @@ ExecStart=/opt/watchlog.sh $WORD $LOG
 ```
 <p>Создадим юнит для таймера:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo nano /etc/systemd/system/watchlog.timer
 
 [Unit]
@@ -74,12 +74,12 @@ WantedBy=multi-user.target
 
 <p>Запускаем timer</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo systemctl start watchlog.timer
 ```
 <p>И убедиться в результате:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo tail -n 1000 /var/log/syslog  | grep word
 2025-10-02T13:28:42.978021+00:00 hwstend hwuser: Чт 02 окт 2025 13:28:42 UTC: I found word, Master!
 2025-10-02T13:30:03.904081+00:00 hwstend hwuser: Чт 02 окт 2025 13:30:03 UTC: I found word, typoe perepisivanie metodichki!
@@ -90,7 +90,7 @@ hwuser@hwstend:~$ sudo tail -n 1000 /var/log/syslog  | grep word
 
 <p>Устанавливаем spawn-fcgi и необходимые для него пакеты:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo apt install spawn-fcgi php php-cgi php-cli \
  apache2 libapache2-mod-fcgid -y
 
@@ -100,7 +100,7 @@ hwuser@hwstend:~$ sudo apt install spawn-fcgi php php-cgi php-cli \
 Он должен получится следующего вида
 </p>
 
-```
+```bash
 root@hwstend:~# nano /etc/spawn-fcgi/fcgi.conf
 
 # You must set some working options before the "spawn-fcgi" service will work.
@@ -116,7 +116,7 @@ OPTIONS="-u www-data -g www-data -s $SOCKET -S -M 0600 -C 32 -F 1 -- /usr/bin/ph
 
 <p>А сам юнит-файл будет примерно следующего вида:</p>
 
-```
+```bash
 root@hwstend:~# nano /etc/systemd/system/spawn-fcgi.service
 
 [Unit]
@@ -138,7 +138,7 @@ WantedBy=multi-user.target
 
 <p>Убеждаемся, что все успешно работает:</p>
 
-```
+```bash
 root@hwstend:~# systemctl start spawn-fcgi
 root@hwstend:~# systemctl status spawn-fcgi.service
 ● spawn-fcgi.service - Spawn-fcgi startup service by Otus
@@ -179,7 +179,7 @@ root@hwstend:~# systemctl status spawn-fcgi.service
 
 <p>Установим Nginx из стандартного репозитория:</p>
 
-```
+```bash
 root@hwstend:~# sudo apt install nginx -y
 
 ```
@@ -187,7 +187,7 @@ root@hwstend:~# sudo apt install nginx -y
 <p>Для запуска нескольких экземпляров сервиса модифицируем исходный service для использования различной конфигурации, а также PID-файлов. Для этого создадим новый Unit для работы с шаблонами (/etc/systemd/system/nginx@.service):
 </p>
 
-```
+```bash
 root@hwstend:~# nano /etc/systemd/system/nginx@.service
 
 
@@ -225,7 +225,7 @@ WantedBy=multi-user.target
 
 <p>Далее необходимо создать два файла конфигурации (/etc/nginx/nginx-first.conf, /etc/nginx/nginx-second.conf). Их можно сформировать из стандартного конфига /etc/nginx/nginx.conf, с модификацией путей до PID-файлов и разделением по портам:</p>
 
-```
+```bash
 root@hwstend:~# cp /etc/nginx/nginx.conf /etc/nginx/nginx-first.conf
 root@hwstend:~# nano /etc/nginx/nginx-first.conf
 pid /run/nginx-first.pid;
@@ -258,7 +258,7 @@ http {
 Проверим работу:
 </p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo systemctl start nginx@first
 hwuser@hwstend:~$ sudo systemctl start nginx@second
 hwuser@hwstend:~$ systemctl status nginx@second.service
