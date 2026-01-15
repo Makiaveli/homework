@@ -4,12 +4,12 @@
 <p></p>#GRUB_TIMEOUT_STYLE=hidden</p>
 <p>GRUB_TIMEOUT=10
 </p>
-```
+```bash
 hwuser@hwstend:/$ sudo nano /etc/default/grub
 ```
 <p>Обновляем конфигурацию загрузчика и перезагружаемся для проверки.</p>
 
-```
+```bash
 hwuser@hwstend:/$ sudo update-grub
 Sourcing file `/etc/default/grub'
 Generating grub configuration file ...
@@ -53,7 +53,7 @@ hwuser@hwstend:/$ sudo reboot
 <p>Первым делом посмотрим текущее состояние системы (список Volume Group):
 </p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo vgs
 [sudo] password for hwuser:
   VG        #PV #LV #SN Attr   VSize   VFree
@@ -62,7 +62,7 @@ hwuser@hwstend:~$ sudo vgs
 ```
 <p>Нас интересует вторая строка с именем Volume Group. Приступим к переименованию:</p>
 
-```
+```bash
 hwuser@hwstend:~$ sudo vgrename ubuntu-vg ubuntu-typeyshaya-laba
   Volume group "ubuntu-vg" successfully renamed to "ubuntu-typeyshaya-laba"
 ```
@@ -71,7 +71,7 @@ hwuser@hwstend:~$ sudo vgrename ubuntu-vg ubuntu-typeyshaya-laba
 </p>
 <img src='https://github.com/Makiaveli/homework/blob/main/8/Screenshot_265.jpg'>
 
-```
+```bash
 hwuser@hwstend:~$ sudo vgs
   VG                     #PV #LV #SN Attr   VSize   VFree
   ubuntu-typeyshaya-laba   1   1   0 wz--n- <22,00g 11,00g
