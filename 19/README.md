@@ -2,7 +2,7 @@
 ## Установка Docker 
 ### Добавляем репозиторий
 
-```
+```bash
 sudo apt update
 sudo apt install ca-certificates curl
 sudo install -m 0755 -d /etc/apt/keyrings
@@ -19,23 +19,23 @@ EOF
 sudo apt update
 ```
 ### Устнавливаем Docker 
-```
+```bash
 sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 ```
 #### P/s в последних версиях модуль docker compose отдельно устанавливать не нужно он уже присутсвует в репозитории.
 
 ### Добавляем пользователя в группу docker
 
-```
+```bash
 sudo usermod -aG docker $USER
 newgrp docker
 ```
 ## Собираем образ
-```
+```bash
 docker build -t velestr/nginx-marvel:1.0 .
 ```
 ## Запускаем кониейнер 
-```
+```bash
 docker run -d -p 8080:80 --name nginx-marvel velestr/nginx-marvel:1.0
 ```
 
@@ -65,7 +65,7 @@ docker run -d -p 8080:80 --name nginx-marvel velestr/nginx-marvel:1.0
 
 ## Пуш образа в Docker Hub
 
-```
+```bash
 docker push velestr  velestr/nginx-marvel:1.0
 ```
 
