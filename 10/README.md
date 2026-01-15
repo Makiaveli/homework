@@ -15,7 +15,7 @@
 
 ### Создаем директорию, разрешаем выполнять скрипт
 
-```
+```bash
 hwuser@hwlab:~$ sudo mkdir -p /var/lib/apache-report
 hwuser@hwlab:~$ sudo chown $USER:$USER /var/lib/apache-report
 hwuser@hwlab:~$ sudo chmod +x /usr/local/bin/apache-hourly-report.sh
@@ -23,7 +23,7 @@ hwuser@hwlab:~$ sudo chmod +x /usr/local/bin/apache-hourly-report.sh
 
 ### Скрипт
 
-```
+```bash
 #!/usr/bin/env bash
 
 LOCKFILE="/var/lib/apache-report/report.lock"
@@ -81,9 +81,9 @@ echo "$NOW" > "$LASTRUN"
 
 ```
 ### Добавляем задание в cron
-```
+```bash
 hwuser@hwlab:~$  crontab -e
 ```
-```
+```bash
 0 * * * * /usr/local/bin/apache-hourly-report.sh
 ```
