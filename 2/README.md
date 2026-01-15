@@ -1,7 +1,7 @@
 # Домашнее задание: работа с mdadm
 ## Создаем raid
 Cмотрим, какие блочные устройства у нас есть
-```
+```bash
 userhw@hwlab:~$ lsblk
 NAME                      MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
 sda                         8:0    0   16G  0 disk
@@ -15,16 +15,16 @@ sr0                        11:0    1  2,6G  0 rom
 
 ```
 Зануляем суперблоки
-```
+```bash
 userhw@hwlab:~$ sudo mdadm --zero-superblock --force /dev/sd{b,c}
 
 ```
 Создаем 1 рейд из двух дисков sdb, sdc
-```
+```bash
 userhw@hwlab:~$ mdadm --create --verbose /dev/md0 -l 1 -n 2 /dev/sd{b,c}
 ```
 Проверяем
-```
+```bash
 userhw@hwlab:~$ sudo mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
@@ -57,20 +57,20 @@ Consistency Policy : resync
 ```
 ## Ломаем, чиним raid
 Переводим диск sdb в состояния аварии
-```
+```bash
 userhw@hwlab:~$ sudo mdadm /dev/md0 --fail /dev/sdb
 mdadm: set /dev/sdb faulty in /dev/md0
 
 ```
 Проверяем
-```
+```bash
 userhw@hwlab:~$ cat /proc/mdstat
 Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
 md0 : active raid1 sdc[1] sdb[0](F)
       5237760 blocks super 1.2 [2/1] [_U]
 
 ```
-```
+```bash
 userhw@hwlab:~$ sudo  mdadm -D /dev/md0
 
 /dev/md0:
@@ -103,17 +103,17 @@ Consistency Policy : resync
        0       8       16        -      faulty   /dev/sdb
 ```
 Удаляем сломанный диск sdb из массива
-```
+```bash
 userhw@hwlab:~$ sudo mdadm /dev/md0 --remove /dev/sdb
 mdadm: hot removed /dev/sdb from /dev/md0
 ```
 Добавляем в рейд "новый" диск  sdd взамен "вышедшего из строя диска" sdb
-```
+```bash
 userhw@hwlab:~$ sudo mdadm /dev/md0 --add /dev/sdd
 mdadm: added /dev/sdd
 ```
 Проверяем
-```
+```bash
 userhw@hwlab:~$ sudo  mdadm -D /dev/md0
 /dev/md0:
            Version : 1.2
@@ -145,7 +145,7 @@ Consistency Policy : resync
        1       8       32        1      active sync   /dev/sdc
 userhw@hwlab:~$ cat /proc/mdstat
 ```
-```
+```bash
 Personalities : [raid0] [raid1] [raid4] [raid5] [raid6] [raid10] [linear]
 md0 : active raid1 sdd[2] sdc[1]
       5237760 blocks super 1.2 [2/1] [_U]
@@ -156,12 +156,12 @@ unused devices: <none>
 ```
 ## Создаем GPT таблицу
 
-```
+```bash
 userhw@hwlab:~$ sudo parted -s /dev/md0 mklabel gpt
 
 ```
 Создаем партиции
-```
+```bash
 userhw@hwlab:~$ sudo parted /dev/md0 mkpart primary ext4 0% 50%
 Information: You may need to update /etc/fstab.
 
@@ -170,7 +170,7 @@ Information: You may need to update /etc/fstab.
 
 ```
 Создаем на этих партициях ФС
-```
+```bash
 userhw@hwlab:~$ for i in $(seq 1 2); do sudo mkfs.ext4 /dev/md0p$i; done
 mke2fs 1.47.0 (5-Feb-2023)
 Discarding device blocks: done
@@ -199,7 +199,7 @@ Writing superblocks and filesystem accounting information: done
 ```
 
 Монтируем их в каталоги 
-```
+```bash
 [root@hwlab:~#  mkdir -p /raid/part{1,2}
 [root@hwlab:~# for i in $(seq 1 2); do mount /dev/md0p$i /raid/part$i;  done
 
