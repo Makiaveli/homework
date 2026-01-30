@@ -2,7 +2,7 @@
 
 ## Задание
 
-[Методичка]([https://docs.google.com/document/d/1tJjZQzVccj0UoRlVLa-E-uxQtQDOCuW_sAk2nluiFo4/edit](https://docs.google.com/document/d/1tJjZQzVccj0UoRlVLa-E-uxQtQDOCuW_sAk2nluiFo4/edit?tab=t.0))
+<a href="https://docs.google.com/document/d/1tJjZQzVccj0UoRlVLa-E-uxQtQDOCuW_sAk2nluiFo4/edit](https://docs.google.com/document/d/1tJjZQzVccj0UoRlVLa-E-uxQtQDOCuW_sAk2nluiFo4/edit?tab=t.0">[Методичка]</a>
 
 1. Между двумя виртуалками поднять vpn в режимах:
 * tun
