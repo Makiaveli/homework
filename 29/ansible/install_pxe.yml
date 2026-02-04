@@ -1,0 +1,4 @@
+- hosts: pxe
+  become: true
+  roles:
+    - pxe-dhcp
