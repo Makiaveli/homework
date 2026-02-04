@@ -41,4 +41,9 @@
       <li><a href ="https://github.com/Makiaveli/homework/tree/main/37">37. Сетевые пакеты. VLAN'ы. LACP </a></li>
       <li><a href ="https://github.com/Makiaveli/homework/tree/main/38">38. LDAP. Централизованная авторизация и аутентификация</a></li>
     </ul>
+<li>6 месяц</li>
+  <ul>
+    
+  </ul>
+  Динамический веб
 </ul>
