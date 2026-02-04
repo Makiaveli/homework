@@ -23,5 +23,22 @@
     <ul>
       <li><a href ="https://github.com/Makiaveli/homework/tree/main/18">18. Vagrant</a></li>
       <li><a href ="https://github.com/Makiaveli/homework/tree/main/19">19. Docker: основы работы с контейнеризацией</a></li>
+      <li><a href ="">22. Prometheus, Zabbix</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/24">24. Пользователи и группы. Авторизация и аутентификация</a></li>
+    </ul>
+  <li>4 месяц</li>
+    <ul>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/25">25. Основы сбора и хранения логов</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/27">27. Резервное копирование</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/28">28. Архитектура сетей</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/29">29. DHCP, PXE</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/30">30. Фильтрация трафика - iptables </a></li>
+    </ul>
+  <li>5 месяц</li>
+    <ul>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/33">33. Статическая и динамическая маршрутизация, OSPF</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/35">35. Мосты, туннели и VPN</a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/37">37. Сетевые пакеты. VLAN'ы. LACP </a></li>
+      <li><a href ="https://github.com/Makiaveli/homework/tree/main/38">38. LDAP. Централизованная авторизация и аутентификация</a></li>
     </ul>
 </ul>
