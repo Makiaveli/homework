@@ -1,0 +1,17 @@
+---
+# defaults file for pxe-dhcp
+iface: ens35
+pxe_ip: 192.168.1.11
+
+dhcp_start: 192.168.1.30
+dhcp_end: 192.168.1.40
+
+tftp_root: /srv/tftp
+images_dir: /srv/images
+ks_dir: /srv/ks
+
+netboot_url: https://mirror.team-host.ru/ubuntu-cdimage/25.10/ubuntu-25.10-netboot-amd64.tar.gz
+iso_url: https://mirror.team-host.ru/ubuntu-cdimage/25.10/ubuntu-25.10-live-server-amd64.iso
+
+netboot_archive: /tmp/ubuntu-netboot.tar.gz
+iso_file: /srv/images/ubuntu-25.10-live-server-amd64.iso
