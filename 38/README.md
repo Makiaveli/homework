@@ -1,8 +1,8 @@
-# 37. LDAP. Централизованная авторизация и аутентификация
+# 38. LDAP. Централизованная авторизация и аутентификация
 
 ## Задание
 
-[Методичка](https://docs.google.com/document/d/1HoZBcvitZ4A9t-y6sbLEbzKmf4CWvb39/edit)
+[Методичка](https://docs.google.com/document/d/1HoZBcvitZ4A9t-y6sbLEbzKmf4CWvb39/edit?pli=1)
 
 Цель домашнего задания:
 Научиться настраивать LDAP-сервер и подключать к нему LDAP-клиентов
