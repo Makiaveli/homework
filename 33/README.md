@@ -6,7 +6,7 @@
 
 ## Задание
 
-[Методичка](https://docs.google.com/document/d/1c3p-2PQl-73G8uKJaqmyCaw_CtRQipAt/edit?usp=share_link&ouid=104106368295333385634&rtpof=true&sd=true)
+<a href="https://docs.google.com/document/d/1c3p-2PQl-73G8uKJaqmyCaw_CtRQipAt/edit?usp=share_link&ouid=104106368295333385634&rtpof=true&sd=true">Методичка</a>
 
 1. Развернуть 3 виртуальные машины
 2. Объединить их разными vlan
