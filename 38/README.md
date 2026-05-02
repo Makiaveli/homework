@@ -2,7 +2,6 @@
 
 ## Задание
 
-[Методичка](https://docs.google.com/document/d/1HoZBcvitZ4A9t-y6sbLEbzKmf4CWvb39/edit?pli=1)
 
 Цель домашнего задания:
 Научиться настраивать LDAP-сервер и подключать к нему LDAP-клиентов
@@ -11,12 +10,6 @@
 1) Установить FreeIPA
 2) Написать Ansible-playbook для конфигурации клиента
 
-
-## Script
-
-```bash
-scriptreplay --timing=timing.log --divisor=5 script.log
-```
 
 ## Практическая часть
 
